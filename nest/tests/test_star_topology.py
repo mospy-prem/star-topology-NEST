@@ -11,4 +11,8 @@ temp = star(5,"10.0.1.0/24")
 temp.ping_all();    
 
 #ping_one function used to ping from one host to interface of another host by their respective node number:
-temp.ping_one(1,2)
+n1 = 1
+n2 = 3
+h = temp.get_node(n1)
+eth = temp.get_eth(n2)
+h.ping(eth.address)
