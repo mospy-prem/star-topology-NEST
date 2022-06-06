@@ -8,7 +8,7 @@ from nest.topology.topo_helper import topo_helper
 class Error(Exception):
     def __init__(self,message):
         self.message=message
-
+        #print(self.message)
 #star_topology class
 
 class star(topo_helper):
@@ -32,7 +32,7 @@ class star(topo_helper):
    #creating a network for the topology 
    def network_creation(self):
        self.n = Network(self.network_add)   
-       return self.n
+       #return self.n
        
    #creating total nodes in a topology with respective name of each node eg: h1 for 1st node ....    
    def node_creation(self):
@@ -57,6 +57,8 @@ class star(topo_helper):
        #with self.n:
        for i in range(self.node_count):
            (x,y) = connect(node_list[i], self.s, network=self.n)
+           x.set_attributes("5mbit", "5ms")
+           y.set_attributes("10mbit", "100ms")
            #print(x,",")
            node_interface_list.append(x)
            switch_interface_list.append(y)
@@ -86,10 +88,15 @@ class star(topo_helper):
                   i.ping(j.address)
            print("\n")
    
+   def get_node(self,n):
+       return self.node_list[n-1]
+   
+   def get_eth(self,n):
+       return self.node_interface_list[n-1]
    #checking connection between given two nodes 
-   def ping_one(self,n1 , n2):
-       print("=== PING from "+self.node_list[n1-1]._name +" to "+ self.node_list[n2-1]._name + " ===")
-       self.node_list[n1-1].ping(self.node_interface_list[n2-1].address)       
+   #def ping_one(self,n1 , n2):
+       #print("=== PING from "+self.node_list[n1-1]._name +" to "+ self.node_list[n2-1]._name + " ===")
+       #self.node_list[n1-1].ping(self.node_interface_list[n2-1].address)       
                
    #TOdo
    #assigning bandwith and delays for each interfaces in the topology            
